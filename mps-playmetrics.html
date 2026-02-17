@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPS PlayMetrics | The Standard of Youth Football Data</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- FontAwesome (Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Inter (Professional, Clean) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (max-width: 768px) { .chart-container { height: 300px; } }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .nav-link { position: relative; color: #475569; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background-color: #2563eb; transition: width 0.3s; }
+        .nav-link:hover { color: #1e3a8a; }
+        .nav-link:hover::after { width: 100%; }
+        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .tab-btn.active { background-color: #eff6ff; color: #1e40af; border-bottom: 3px solid #2563eb; }
+        .tab-btn { color: #64748b; border-bottom: 3px solid transparent; }
+        .tab-btn:hover:not(.active) { color: #334155; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="antialiased">
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 bg-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-blue-200 shadow-lg">M</div>
+                    <span class="font-bold text-2xl tracking-tight text-slate-900">MPS <span class="font-light text-slate-500">PlayMetrics</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#problem" class="nav-link px-3 py-2 text-sm font-semibold transition">The Gap</a>
+                        <a href="#solution" class="nav-link px-3 py-2 text-sm font-semibold transition">Solution</a>
+                        <a href="#process" class="nav-link px-3 py-2 text-sm font-semibold transition">Process</a>
+                        <a href="#contact" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-full transition shadow-lg shadow-blue-500/20">도입 문의</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="inline-flex items-center justify-center p-2 rounded-md text-slate-600 hover:text-blue-600 hover:bg-blue-50 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white border-t border-slate-100" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#problem" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50">The Gap</a>
+                <a href="#solution" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50">Solution</a>
+                <a href="#process" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50">Process</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-bold text-blue-600 bg-blue-50">도입 문의</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative bg-slate-50 h-screen min-h-[700px] flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 z-0"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-amber-50/60 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 z-0"></div>
+        <div class="absolute inset-0 z-0 opacity-[0.03]" style="background-image: linear-gradient(#1e3a8a 1px, transparent 1px), linear-gradient(90deg, #1e3a8a 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-block mb-6 px-4 py-1.5 rounded-full bg-white border border-blue-200 shadow-sm text-blue-700 text-xs font-bold uppercase tracking-wider fade-in-up">
+                <i class="fa-solid fa-medal mr-2 text-amber-500"></i>First Class Data Solution
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 fade-in-up delay-100 leading-tight">
+                성향, 성장지연, 부상으로<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">재능이 낙오되지 않도록</span>
+            </h1>
+            <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-slate-600 fade-in-up delay-200 font-normal leading-relaxed">
+                유럽 프로 유스팀이 검증한 <strong>PHV(성장급증기)</strong> 기반 관리 시스템.<br>
+                <strong>멘탈(M), 피지컬(P), 성장(S)</strong>의 균형. 이제 '감'이 아닌 '데이터'로 선수를 증명하십시오.
+            </p>
+        </div>
+    </header>
+
+    <section id="solution" class="py-24 bg-slate-50 overflow-hidden relative border-y border-slate-200">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-bold tracking-wider uppercase text-sm bg-blue-50 px-3 py-1 rounded-full">Our Solution</span>
+                <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mt-4 mb-4">Evidence-based Youth Athlete Care</h2>
+                <p class="text-slate-500 text-lg">3가지 밸런스를 통합한 국내 최초 주기 평가 기반 데이터 플랫폼</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden">
+                <div class="flex flex-wrap border-b border-slate-200 bg-slate-50/50" id="mpsTabs">
+                    <button onclick="switchTab('mental')" id="tab-mental" class="tab-btn flex-1 py-5 px-6 text-center text-sm md:text-lg font-bold transition duration-200 flex items-center justify-center"><i class="fa-solid fa-brain mr-2.5"></i>Mental (M)</button>
+                    <button onclick="switchTab('physical')" id="tab-physical" class="tab-btn flex-1 py-5 px-6 text-center text-sm md:text-lg font-bold transition duration-200 flex items-center justify-center"><i class="fa-solid fa-heart-pulse mr-2.5"></i>Physical (P)</button>
+                    <button onclick="switchTab('strength')" id="tab-strength" class="tab-btn flex-1 py-5 px-6 text-center text-sm md:text-lg font-bold transition duration-200 flex items-center justify-center"><i class="fa-solid fa-arrow-trend-up mr-2.5"></i>Strength (S)</button>
+                </div>
+                <div class="p-6 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <div id="info-panel" class="order-2 lg:order-1"></div>
+                    <div class="order-1 lg:order-2 bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-inner">
+                        <div class="chart-container bg-white rounded-xl p-2 border border-slate-100 shadow-sm">
+                            <canvas id="mpsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const mpsData = {
+            mental: {
+                title: "Mental Performance (멘탈 퍼포먼스)",
+                sub: "\"선발이 아닌 '성장'을 위한 1:1 맞춤형 심리 솔루션.\"",
+                details: [
+                    { icon: "fa-clipboard-check", title: "심리 행동 특성", text: "검증된 방식으로 훈련 태도, 압박 대처 등 재능 개발에 필요한 심리 특성을 평가합니다." }
+                ],
+                chartData: {
+                    labels: ['회복탄력성', '훈련태도', '시합자신감', '감정조절', '목표설정', '압박대처'],
+                    datasets: [{ label: '선수 현재 상태', data: [65, 88, 55, 70, 85, 60], fill: true, backgroundColor: 'rgba(37, 99, 235, 0.2)', borderColor: '#2563eb' }]
+                }
+            },
+            physical: { title: "Physical Risk Control (피지컬 리스크 관리)", sub: "\"부상은 예측하고, 컨디션은 관리합니다.\"", details: [{ icon: "fa-heart-pulse", title: "OTS & RED-S 리스크 관리", text: "자율신경계(HRV) 데이터를 통해 위험 징후를 모니터링합니다." }] },
+            strength: { title: "Strength & Growth (성장 및 강화)", sub: "\"키 예측을 넘어, 성장 시기에 맞는 훈련을 설계합니다.\"", details: [{ icon: "fa-ruler", title: "PHV 기반 평가", text: "비침습 초음파 기반의 안전한 PHV 평가 데이터 연동." }] }
+        };
+
+        let currentChart = null;
+
+        function renderTab(type) {
+            const data = mpsData[type];
+            const infoPanel = document.getElementById('info-panel');
+            infoPanel.innerHTML = `
+                <div class="fade-in-up">
+                    <h3 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-3">${data.title}</h3>
+                    <p class="text-blue-600 text-lg font-medium italic mb-8 border-l-4 border-amber-400 pl-4 bg-slate-50 py-2">${data.sub}</p>
+                    <div class="space-y-6">${data.details.map(detail => `<div class="flex items-start bg-white p-5 rounded-xl border border-slate-100 shadow-sm"><div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mr-4 flex-shrink-0"><i class="fa-solid ${detail.icon}"></i></div><div><h5 class="text-slate-900 font-bold text-sm mb-1">${detail.title}</h5><p class="text-slate-600 text-xs leading-relaxed">${detail.text}</p></div></div>`).join('')}</div>
+                </div>
+            `;
+
+            if (currentChart) currentChart.destroy();
+            const ctx = document.getElementById('mpsChart').getContext('2d');
+            currentChart = new Chart(ctx, {
+                type: 'radar',
+                data: data.chartData || mpsData.mental.chartData,
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function switchTab(type) {
+            ['mental', 'physical', 'strength'].forEach(t => document.getElementById(`tab-${t}`).classList.toggle('active', t === type));
+            renderTab(type);
+        }
+
+        window.addEventListener('load', () => renderTab('mental'));
+    </script>
+</body>
+</html>
